@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".auth.LoginActivity"
+    android:gravity="center">
+
+    <TextView
+        style="@style/AppTextView"
+        android:id="@+id/login_sms_hint"
+        android:text="@string/auth_enter_sms_code" />
+
+    <EditText
+        style="@style/AppEditText"
+        android:id="@+id/login_code"
+        android:hint="@string/auth_enter_sms_code"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        style="@style/AppButton"
+        android:layout_gravity="center_horizontal|bottom"
+        android:text="@string/auth_button_resend_sms"
+        android:id="@+id/auth_button_resend_sms"
+        android:layout_marginBottom="10dp"
+        />
+
+    <Button
+        style="@style/AppButton"
+        android:layout_gravity="center_horizontal|bottom"
+        android:text="@string/common_cancel"
+        android:id="@+id/login_cancel_operation_button"
+        android:paddingBottom="10dp"
+        />
+
+</LinearLayout>

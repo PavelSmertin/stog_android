@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="bg_green" type="color">#FF00BE7D</item>
+    <item name="bg_green_transparent" type="color">#AA00BE7D</item>
+    <item name="bg_black" type="color">#FF000000</item>
+    <item name="bg_black2" type="color">#FF222222</item>
+    <item name="bg_gray" type="color">#FFf0f1ee</item>
+    <item name="bg_gray2" type="color">#FF333333</item>
+    <item name="bg_gray_white" type="color">#44f0f1ee</item>
+    <item name="bg_white_transparent" type="color">#aaffffff</item>
+    <item name="transparent" type="color">#00000000</item>
+    <item name="transparent_disabled" type="color">#33000000</item>
+    <item name="transparent_pressed" type="color">#11000000</item>
+    <item name="transparent_text_color" type="color">#FFFFFFFF</item>
+    <item name="transparent_text_color_disabled" type="color">#88FFFFFF</item>
+    <item name="transparent_text_color_pressed" type="color">#FFFFFFFF</item>
+    <item name="white" type="color">#ffffffff</item>
+    <item name="white2" type="color">#aaffffff</item>
+    <item name="button_green" type="color">#ff159145</item>
+    <item name="button_green_error" type="color">#EEFF9270</item>
+    <item name="button_green_pressed" type="color">#bb159145</item>
+    <item name="button_green_error_pressed" type="color">#bbFF9270</item>
+    <item name="button_green_disabled" type="color">#88159145</item>
+    <item name="button_green_error_disabled" type="color">#EEFF9270</item>
+    <item name="button_green_light" type="color">#FF159145</item>
+    <item name="text_green" type="color">#ff20c07c</item>
+    <item name="text_green_light" type="color">#FF77D1A3</item>
+    <item name="text_green_dark" type="color">#FF159145</item>
+    <item name="text_label_error" type="color">#FFb32317</item>
+    <item name="green_dark" type="color">#FF007E45</item>
+    <item name="button_border_gray" type="color">#FFf0f1ee</item>
+    <item name="border_gray" type="color">#4db7b6b0</item>
+    <item name="border_gray2" type="color">#ff323432</item>
+    <item name="border_gray3" type="color">#ffb7b6b0</item>
+    <item name="limit_circle_gray" type="color">#FFf0f1ee</item>
+    <item name="button_gray" type="color">#FFDDDDDD</item>
+    <item name="button_text_gray" type="color">#FF999999</item>
+    <item name="text_gray" type="color">#FF999999</item>
+    <item name="text_gray2" type="color">#FF676767</item>
+    <item name="text_gray3" type="color">#77FFFFFF</item>
+    <item name="text_gray4" type="color">#77b8b7b0</item>
+    <item name="text_black" type="color">#FF000000</item>
+    <item name="text_black2" type="color">#FF2a3d42</item>
+
+    <item name="quad_line_green" type="color">#FF27dd9d</item>
+    <item name="quad_line_green_dark" type="color">#6627dd9d</item>
+    <item name="quad_line_red" type="color">#FFe56f6f</item>
+
+    <item name="card_picker_background" type="color">#FFF0F1EE</item>
+    <item name="card_picker_title_top" type="color">#FF172F39</item>
+    <item name="card_picker_title_number" type="color">#FFBCBFBD</item>
+    <item name="card_picker_meta" type="color">#FF6a9ab4</item>
+
+    <item name="quad_line_red_dark" type="color">#33e56f6f</item>
+    <item name="button_yellow" type="color">#FFF1C151</item>
+    <item name="button_yellow_pressed" type="color">#bbF1C151</item>
+    <item name="button_yellow_disabled" type="color">#88F1C151</item>
+    <item name="support_footer" type="color">#FFF0F1EE</item>
+    <item name="support_footer_top" type="color">#FFEBEBE9</item>
+    <item name="support_tab" type="color">#FFF0F1EE</item>
+    <item name="support_footer_text" type="color">#FFA09F9D</item>
+    <item name="support_default_tab_text" type="color">#FF7F807B</item>
+    <item name="support_selected_tab_text" type="color">#FF09C585</item>
+    <item name="support_text_active_dark" type="color">#FF222E34</item>
+    <item name="support_title_mail" type="color">#FFB8B5B4</item>
+    <item name="support_edittext_mail" type="color">#FF09C584</item>
+    <item name="support_topic_border" type="color">#FFF1F2EF</item>
+    <item name="support_email_confirm_bottom_border" type="color">#FFDDDCD9</item>
+    <item name="support_selected_dialog_listview" type="color">#FFF6F7F5</item>
+
+    <item name="underline_bottom_green" type="color">#FF09C584</item>
+    <item name="underline_bottom_grey" type="color">#FFBAB9B3</item>
+
+    <item name="passport_instruction_icon_background" type="color">#FFF0F1EE</item>
+    <item name="passport_instruction_number_color" type="color">#FF517a90</item>
+    <item name="passport_new_actionbar_page_image" type="color">#FF676767</item>
+    <item name="late_payment_loan" type="color">#FFEE6B78</item>
+    <item name="late_payment_loan_disabled" type="color">#88EE6B78</item>
+    <item name="late_payment_loan_pressed" type="color">#bbEE6B78</item>
+    <item name="drawer_pressed" type="color">#FF20c07c</item>
+    <item name="drawer_selected" type="color">#FF2D2D2D</item>
+    <item name="serator_underline" type="color">#FFE3E3E0</item>
+    <item name="info_additional_text" type="color">#FF7f7e7a</item>
+    <item name="value_text" type="color">#FF20c07c</item>
+
+    <color name="slider_active">#ff00C380</color>
+    <color name="slider_nonactive">#ffBFCBC5</color>
+    <color name="checkbox_default_text_color">#ff2a3d42</color>
+    <color name="checkbox_checked_text_color">#ff7f7e7a</color>
+    <color name="right_separator_vertical">#fff0f1ee</color>
+
+    <color name="loader_background">#22000000</color>
+
+</resources>

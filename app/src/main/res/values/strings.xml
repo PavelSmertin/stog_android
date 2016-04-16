@@ -11,4 +11,28 @@
     <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
+
+
+
+
+
+
+
+    <string name="common_please_wait">Please wait</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_continue">Continue</string>
+
+    <string name="auth_button_forgot_password">Forgot password?</string>
+    <string name="auth_button_resend_sms">Resend sms</string>
+    <string name="auth_enter_password">Enter pin</string>
+    <string name="auth_your_phone_number">Enter phone number</string>
+    <string name="auth_enter_sms_code">Enter sms code</string>
+
+
+    <string name="auth_create_password">Choose pin code</string>
+    <string name="auth_create_password_repeat">Repeate pin code</string>
+    <string name="auth_create_password_repeat_fail">Pin codes not similar</string>
+    <string name="auth_invalid_update_pin">Pin code change error</string>
+    <string name="no_error_description">unknown failure</string>
+
 </resources>
