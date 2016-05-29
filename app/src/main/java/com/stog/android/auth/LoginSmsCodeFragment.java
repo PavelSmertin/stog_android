@@ -34,6 +34,8 @@ public class LoginSmsCodeFragment extends Fragment {
     private EditText mDigitCodeView;
     private Button mResendButton, mCancelButton;
 
+    public final static String SMS_KEY = "stog";
+
     private LoginSmsCodeFragmentInteractionListener mListener;
 
 
@@ -192,7 +194,7 @@ public class LoginSmsCodeFragment extends Fragment {
                             messages[i] = SmsMessage.createFromPdu((byte[]) pduArray[i]);
                         }
                         String sms_from = messages[0].getDisplayOriginatingAddress();
-                        if (sms_from.equals("PLATIZA.RU")) {
+                        if (sms_from.equals(SMS_KEY)) {
                             String textMessage = messages[0].getMessageBody();
                             Pattern p = Pattern.compile("\\d{4}");
                             Matcher m = p.matcher(textMessage);

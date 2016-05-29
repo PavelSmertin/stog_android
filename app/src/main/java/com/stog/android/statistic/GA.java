@@ -10,7 +10,7 @@ public class GA {
 
     private static GA instance = null;
     private Context context = null;
-    private static final String TAG = "platiza-mobile-ga-stat";
+    private static final String TAG = "mobile-ga-stat";
     private GoogleAnalytics analytics;
     private Tracker tracker;
 
@@ -28,7 +28,7 @@ public class GA {
 
     public Tracker getTracker() {
         if(tracker == null) {
-            //tracker = analytics.newTracker(R.xml.platiza_tracker);
+            //tracker = analytics.newTracker(R.xml.app_tracker);
             tracker.enableAdvertisingIdCollection(true);
         }
         return tracker;
