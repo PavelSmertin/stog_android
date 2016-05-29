@@ -29,7 +29,7 @@ public class GcmTokenHelper {
     }
 
     public String getGcmToken(Context context){
-        String gcmToken = PreferencesHelper.getGcmToken();
+        String gcmToken = PreferencesHelper.getInstance().getGcmToken();
         if(gcmToken==null){
             try {
                 gcmToken = generateGcmToken(context);

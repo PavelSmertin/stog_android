@@ -7,11 +7,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.stog.android.R;
 import com.stog.android.api.ResponseCallback;
@@ -20,8 +21,9 @@ import com.stog.android.api.response.CheckLoginResponse;
 import com.stog.android.statistic.ButtonParamsPull;
 import com.stog.android.statistic.StatisticAdapter;
 import com.stog.android.storage.PreferencesHelper;
+import com.stog.android.view.EditText;
 
-public class LoginPhoneFragment extends Fragment {
+public class LoginPhoneFragment extends Fragment implements TextWatcher{
 
     private EditText mPhoneEditText;
     private Button mLoginButton;
@@ -40,7 +42,11 @@ public class LoginPhoneFragment extends Fragment {
         view = View.inflate(getActivity(), R.layout.fragment_login_phone, null);
 
         mPhoneEditText = (EditText)view.findViewById(R.id.login_phone);
-        mPhoneEditText.setText("+7");
+        //mPhoneEditText.setText("+7");
+        //mPhoneEditText.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
+        mPhoneEditText.addTextChangedListener(this);
+
         mLoginButton = (Button)view.findViewById(R.id.login_button);
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +56,7 @@ public class LoginPhoneFragment extends Fragment {
             }
         });
 
-        String phoneNumber = PreferencesHelper.getLogin();
+        String phoneNumber = PreferencesHelper.getInstance().getLogin();
         storagePhoneNumber = phoneNumber;
 
         return view;
@@ -66,7 +72,7 @@ public class LoginPhoneFragment extends Fragment {
         } else {
             mLogin = phoneValue;
         }
-        PreferencesHelper.setLogin(mLogin);
+        PreferencesHelper.getInstance().setLogin(mLogin);
         checkLogin();
     }
 
@@ -74,18 +80,18 @@ public class LoginPhoneFragment extends Fragment {
         User.checkLogin(mLogin, new ResponseCallback<CheckLoginResponse>() {
             @Override
             public void onResponse(CheckLoginResponse response) {
-                    LoginActivity.AuthState state;
-                    if (response.isPhoneExists()) {
-                        StatisticAdapter.sendButtonEvent(new ButtonParamsPull("e_user_exist"));
-                        state = LoginActivity.AuthState.SIGNIN;
-                    } else {
-                        StatisticAdapter.sendButtonEvent(new ButtonParamsPull("e_user_new"));
-                        state = LoginActivity.AuthState.SIGNUP;
-                    }
+                LoginActivity.AuthState state;
+                if (response.getId() > 0 ) {
+                    //StatisticAdapter.sendButtonEvent(new ButtonParamsPull("e_user_exist"));
+                    state = LoginActivity.AuthState.SIGNIN;
+                } else {
+                    //StatisticAdapter.sendButtonEvent(new ButtonParamsPull("e_user_new"));
+                    state = LoginActivity.AuthState.SIGNUP;
+                }
 
-                    if (mListener != null) {
-                        mListener.onPhoneSendEnd(state);
-                    }
+                if (mListener != null) {
+                    mListener.onPhoneSendEnd(state);
+                }
             }
 
             @Override
@@ -114,6 +120,25 @@ public class LoginPhoneFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        if(mPhoneEditText.isValid()) {
+            mLoginButton.setEnabled(true);
+        } else {
+            mLoginButton.setEnabled(false);
+        }
     }
 
     public interface OnPhoneFragmentInteractionListener {

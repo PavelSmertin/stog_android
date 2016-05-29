@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".auth.LoginActivity"
-    android:gravity="center">
 
-    <TextView
-        style="@style/AppTextView"
-        android:id="@+id/login_phone_hint"
-        android:text="@string/auth_your_phone_number" />
+    android:padding="@dimen/activity_horizontal_margin"
+    >
 
-    <EditText
+    <com.stog.android.view.EditText
         style="@style/AppEditText"
         android:id="@+id/login_phone"
         android:hint="@string/auth_your_phone_number"
-        android:digits="@string/validator_allow_digitals" />
+        android:textSize="@dimen/large_text_size2"
+        android:inputType="phone"
+        app:validator="phone_number"
+        />
 
     <Button
         style="@style/AppButton"

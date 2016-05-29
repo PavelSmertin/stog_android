@@ -1,5 +1,6 @@
 package com.stog.android.api;
 
+import android.content.Context;
 import android.os.Looper;
 
 import com.google.gson.Gson;
@@ -16,20 +17,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class RestClient {
 
-    private static final String BASE_URL = "https://api.platiza.ru/mobile1/action/";
+    private static final RestClient INSTANCE = new RestClient();
+
+    private static final String BASE_URL = "http://secret-atoll-68402.herokuapp.com/api/v1/";
 
     private static final String HEADER_AUTH_LOGIN = "X-User-Phone";
     private static final String HEADER_AUTH_TOKEN = "X-User-Token";
 
-    private static List<OnLogoutListener> logoutListeners = new ArrayList<>();
+    private List<OnLogoutListener> logoutListeners = new ArrayList<>();
 
-    private static AsyncHttpClient client = new AsyncHttpClient();
-    public static AsyncHttpClient syncHttpClient= new SyncHttpClient();
+    private AsyncHttpClient client = new AsyncHttpClient();
+    public AsyncHttpClient syncHttpClient= new SyncHttpClient();
 
-    public static void setHeaders(String login, String token){
+
+    public static RestClient getInstance() {
+        return INSTANCE;
+    }
+
+    private RestClient() {
+
+    }
+
+
+    public void setHeaderLogin(String login){
+        client.addHeader(HEADER_AUTH_LOGIN, login);
+        client.removeHeader(HEADER_AUTH_TOKEN);
+    }
+
+    public void setHeaders(String login, String token){
         client.addHeader(HEADER_AUTH_LOGIN, login);
         client.addHeader(HEADER_AUTH_TOKEN, token);
     }
@@ -37,7 +56,7 @@ public class RestClient {
     /**
      * @return an async client when calling from the main thread, otherwise a sync client.
      */
-    private static AsyncHttpClient getClient() {
+    private AsyncHttpClient getClient() {
         AsyncHttpClient cl = client;
         // Return the synchronous HTTP client when the thread is not prepared
         if (Looper.myLooper() == null) {
@@ -46,43 +65,48 @@ public class RestClient {
         return cl;
     }
 
-    public static void addOnLogoutListener(OnLogoutListener onLogoutListener) {
+    public void addOnLogoutListener(OnLogoutListener onLogoutListener) {
         if (logoutListeners.contains(onLogoutListener)) {
             return;
         }
         logoutListeners.add(onLogoutListener);
     }
 
-    public static void removeOnLogoutListener(OnLogoutListener onLogoutListener) {
+    public void removeOnLogoutListener(OnLogoutListener onLogoutListener) {
         if (!logoutListeners.contains(onLogoutListener)) {
             return;
         }
         logoutListeners.remove(onLogoutListener);
     }
 
-    private static  void notifyOnLogoutListeners() {
+    private void notifyOnLogoutListeners() {
         for (OnLogoutListener listener : logoutListeners) {
             listener.onLogout();
         }
     }
 
-    public static <T> void get(String method, InitialRequestParams params, Type type, ResponseCallback<T> responseHandler) {
+    public <T> void get(String method, InitialRequestParams params, Type type, ResponseCallback<T> responseHandler) {
         getClient().get(getAbsoluteUrl(method), params, getCallback(type, responseHandler));
     }
 
-    public static <T> void post(String method, InitialRequestParams params, Type type, ResponseCallback<T> responseHandler) {
+    public <T> void post(String method, InitialRequestParams params, Type type, ResponseCallback<T> responseHandler) {
         getClient().post(getAbsoluteUrl(method), params, getCallback(type, responseHandler));
     }
 
-    public static <T> void put(String method, InitialRequestParams params, Type type, ResponseCallback<T> responseHandler) {
+    public <T> void postRaw(Context context, String method, InitialRequestParams params, StringEntity entity, Type type, ResponseCallback<T> responseHandler) {
+        getClient().post(context, getAbsoluteUrl(method), entity, "application/json",  getCallback(type, responseHandler));
+    }
+
+
+    public <T> void put(String method, InitialRequestParams params, Type type, ResponseCallback<T> responseHandler) {
         getClient().put(getAbsoluteUrl(method), params, getCallback(type, responseHandler));
     }
 
-    public static <T> void delete(String method, InitialRequestParams params, Type type, ResponseCallback<T> responseHandler) {
+    public <T> void delete(String method, InitialRequestParams params, Type type, ResponseCallback<T> responseHandler) {
         getClient().delete(getAbsoluteUrl(method), params, getCallback(type, responseHandler));
     }
 
-    private static <T> JsonHttpResponseHandler getCallback(final Type type, final ResponseCallback<T> methodCallback){
+    private <T> JsonHttpResponseHandler getCallback(final Type type, final ResponseCallback<T> methodCallback){
         return new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -116,7 +140,7 @@ public class RestClient {
         };
     }
 
-    private static String getAbsoluteUrl(String relativeUrl) {
+    private String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
     }
 

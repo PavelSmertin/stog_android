@@ -14,11 +14,14 @@ public class SkirdApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        PreferencesHelper.getInstance().setSharedPreferences(this);
+
+
         //GA.getInstance(getApplicationContext()).sendScreenName("launch application"); // ga wrapper
 
         //Fabric.with(this, new Crashlytics());
 
-        PreferencesHelper.setSharedPreferences(this);
+
 
         //JellyfishStorage.createInstance(this);
 
@@ -49,7 +52,7 @@ public class SkirdApplication extends Application {
 
     @Override
     public void onTerminate() {
-        PreferencesHelper.clearChangePinState();
+        PreferencesHelper.getInstance().clearChangePinState();
         super.onTerminate();
     }
 }

@@ -34,15 +34,11 @@ public class LoginPasswordFragment extends Fragment {
     private EditText mPinCodeView;
     private TextView mLoginPasswordHint;
     private Button mChangePasswordButton;
+    private Button mLoginPasswordButton;
 
     private LoginPasswordFragmentInteractionListener mListener;
-    private String login;
     private String pinCodeFirst;
 
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     @Nullable
     @Override
@@ -50,13 +46,21 @@ public class LoginPasswordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = View.inflate(getActivity(), R.layout.fragment_login_password, null);
 
-        mLoginPasswordHint = (TextView)view.findViewById(R.id.login_password_hint);
-
-        mLoginPasswordHint.setText(R.string.auth_create_password);
-
         mPinCodeView = (EditText)view.findViewById(R.id.login_password);
 
-        mChangePasswordButton = (Button)view.findViewById(R.id.login_forgot_password);
+        mLoginPasswordButton = (Button)view.findViewById(R.id.login_pass_button);
+        mLoginPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StatisticAdapter.sendButtonEvent(new ButtonParamsPull("b_Phone_Ok"));
+                next();
+            }
+        });
+
+        /*mLoginPasswordHint = (TextView)view.findViewById(R.id.login_password_hint);
+        mLoginPasswordHint.setText(R.string.auth_create_password);*/
+
+        /*mChangePasswordButton = (Button)view.findViewById(R.id.login_forgot_password);
         mChangePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +69,7 @@ public class LoginPasswordFragment extends Fragment {
                     mListener.onPasswordChange();
                 }
             }
-        });
+        });*/
 
         return view;
     }
@@ -91,9 +95,9 @@ public class LoginPasswordFragment extends Fragment {
 
 
     private void next() {
-        LoginActivity.AuthState state = PreferencesHelper.getAuthState();
+        LoginActivity.AuthState state = PreferencesHelper.getInstance().getAuthState();
 
-        mChangePasswordButton.setEnabled(false);
+        //mChangePasswordButton.setEnabled(false);
 
         if (state == LoginActivity.AuthState.SIGNUP || state == LoginActivity.AuthState.CHANGE_PIN) {
 
@@ -114,10 +118,10 @@ public class LoginPasswordFragment extends Fragment {
                 } else {
                     StatisticAdapter.sendButtonEvent(new ButtonParamsPull("e_ChangeConfirmPin_NotEquals"));
                 }
-                mLoginPasswordHint.setText(R.string.auth_create_password_repeat_fail);
+                //mLoginPasswordHint.setText(R.string.auth_create_password_repeat_fail);
                 mPinCodeView.setText(null);
                 pinCodeFirst = null;
-                mChangePasswordButton.setEnabled(true);
+                //mChangePasswordButton.setEnabled(true);
 
                 createTaskReturnToFirstPinInput();
                 return;
@@ -139,12 +143,12 @@ public class LoginPasswordFragment extends Fragment {
     }
 
     private void signup() {
-        User.signup(login, mPinCodeView.getText().toString(), new ResponseCallback<AuthResponse>() {
+        String login = PreferencesHelper.getInstance().getLogin();
+        User.signup(getActivity(), login, mPinCodeView.getText().toString(), new ResponseCallback<AuthResponse>() {
             @Override
             public void onResponse(AuthResponse response) {
                 StatisticAdapter.sendButtonEvent(new ButtonParamsPull("e_signup_success"));
-                login = PreferencesHelper.getLogin();
-                signin();
+                mListener.onPasswordSendEnd(response);
             }
 
             @Override
@@ -152,7 +156,7 @@ public class LoginPasswordFragment extends Fragment {
                 StatisticAdapter.sendButtonEvent(new ButtonParamsPull("e_signup_error"));
                 mChangePasswordButton.setEnabled(true);
                 if (mListener != null) {
-                    mLoginPasswordHint.setText(error);
+                    //mLoginPasswordHint.setText(error);
                     mPinCodeView.setText(null);
                     mListener.onPasswordSendError(error);
                 }
@@ -161,7 +165,8 @@ public class LoginPasswordFragment extends Fragment {
     }
 
     private void signin() {
-        User.signin(login, mPinCodeView.getText().toString(), new ResponseCallback<AuthResponse>() {
+        String login = PreferencesHelper.getInstance().getLogin();
+        User.signin(getActivity(), login, mPinCodeView.getText().toString(), new ResponseCallback<AuthResponse>() {
             @Override
             public void onResponse(AuthResponse response) {
                 if (mListener != null) {
@@ -175,7 +180,7 @@ public class LoginPasswordFragment extends Fragment {
                 StatisticAdapter.sendButtonEvent(new ButtonParamsPull("e_signin_error"));
                 mChangePasswordButton.setEnabled(true);
                 if (mListener != null) {
-                    mLoginPasswordHint.setText(error);
+                    //mLoginPasswordHint.setText(error);
                     mPinCodeView.setText(null);
                     mListener.onPasswordSendError(error);
                 }
@@ -196,7 +201,7 @@ public class LoginPasswordFragment extends Fragment {
                 view.post(new Runnable() {
                     @Override
                     public void run() {
-                        mLoginPasswordHint.setText(R.string.auth_create_password);
+                        //mLoginPasswordHint.setText(R.string.auth_create_password);
                         mListener.onPasswordSendError(null);
                     }
                 });
@@ -213,7 +218,7 @@ public class LoginPasswordFragment extends Fragment {
                     @Override
                     public void run() {
                         pinCodeFirst = mPinCodeView.getText().toString();
-                        mLoginPasswordHint.setText(R.string.auth_create_password_repeat);
+                        //mLoginPasswordHint.setText(R.string.auth_create_password_repeat);
                         mPinCodeView.setText(null);
                     }
                 });

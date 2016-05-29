@@ -2,7 +2,6 @@ package com.stog.android.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,8 +9,8 @@ import android.view.MenuItem;
 import com.stog.android.BaseActivity;
 import com.stog.android.MainActivity;
 import com.stog.android.R;
+import com.stog.android.api.RestClient;
 import com.stog.android.api.response.AuthResponse;
-import com.stog.android.service.GcmConnectService;
 import com.stog.android.statistic.StatisticAdapter;
 import com.stog.android.storage.PreferencesHelper;
 
@@ -37,7 +36,7 @@ public class LoginActivity extends BaseActivity implements
                 replace(R.id.container, fragment, LoginPhoneFragment.class.getName()).
                 commit();
 
-        if (PreferencesHelper.isAuth()) {
+        if (PreferencesHelper.getInstance().isAuth()) {
             next();
         }
     }
@@ -82,12 +81,11 @@ public class LoginActivity extends BaseActivity implements
     @Override
     public void onPhoneSendEnd(AuthState state) {
         hideLoader();
+
+        PreferencesHelper.getInstance().setAuthState(state);
+
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment;
-        LoginPasswordFragment f = new LoginPasswordFragment();
-        String login = PreferencesHelper.getLogin();
-        f.setLogin(login);
-        fragment = f;
+        LoginPasswordFragment fragment = new LoginPasswordFragment();
         fm.beginTransaction().
                 setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.back_slide_in, R.anim.back_slide_out).
                 replace(R.id.container, fragment, fragment.getClass().getName()).
@@ -108,10 +106,11 @@ public class LoginActivity extends BaseActivity implements
     @Override
     public void onPasswordSendEnd(AuthResponse response) {
         StatisticAdapter.setUser();
-        PreferencesHelper.setAuthToken(response.getToken());
+        PreferencesHelper.getInstance().setAuthToken(response.getToken());
+        RestClient.getInstance().setHeaders(PreferencesHelper.getInstance().getLogin(), response.getToken());
 
-        Intent intentGcm = new Intent(LoginActivity.this, GcmConnectService.class);
-        startService(intentGcm);
+        //Intent intentGcm = new Intent(LoginActivity.this, GcmConnectService.class);
+        //startService(intentGcm);
 
         //hideLoader();
         next();

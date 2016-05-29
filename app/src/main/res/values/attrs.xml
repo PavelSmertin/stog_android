@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AppEditText">
+        <attr name="validator" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="TextView">
+        <attr name="textAsHTML" format="boolean"/>
+    </declare-styleable>
+</resources>

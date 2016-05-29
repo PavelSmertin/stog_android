@@ -63,7 +63,7 @@ public class LoginSmsCodeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 StatisticAdapter.sendButtonEvent(new ButtonParamsPull("b_RegSms_SendSmsCancel"));
-                PreferencesHelper.clearChangePinState();
+                PreferencesHelper.getInstance().clearChangePinState();
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 fm.popBackStack();
             }
@@ -86,7 +86,7 @@ public class LoginSmsCodeFragment extends Fragment {
 
     // метод прячет согласие на получение КИ и иже с ними
     private void setVisibleButtonFromAuthState() {
-        LoginActivity.AuthState state = PreferencesHelper.getAuthState();
+        LoginActivity.AuthState state = PreferencesHelper.getInstance().getAuthState();
         if (state == LoginActivity.AuthState.CHANGE_PIN) {
             mCancelButton.setVisibility(View.VISIBLE);
         } else {
@@ -98,7 +98,7 @@ public class LoginSmsCodeFragment extends Fragment {
         if (mListener != null) {
             mListener.onCodeSendStart();
         }
-        LoginActivity.AuthState state = PreferencesHelper.getAuthState();
+        LoginActivity.AuthState state = PreferencesHelper.getInstance().getAuthState();
         StatisticAdapter.sendButtonEvent(new ButtonParamsPull("e_RegSms"));
         smsVerify();
 

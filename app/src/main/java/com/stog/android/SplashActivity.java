@@ -21,7 +21,7 @@ public class SplashActivity extends BaseActivity {
         worker.schedule(new Runnable() {
             @Override
             public void run() {
-                if (PreferencesHelper.isAuth()) {
+                if (PreferencesHelper.getInstance().isAuth()) {
                     openMain();
                 } else {
                     openLogin();

@@ -17,7 +17,7 @@ abstract public class BaseActivity extends AppCompatActivity implements RestClie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RestClient.addOnLogoutListener(this);
+        RestClient.getInstance().addOnLogoutListener(this);
     }
 
     public void showLoader(String message){
@@ -44,7 +44,7 @@ abstract public class BaseActivity extends AppCompatActivity implements RestClie
 
     @Override
     public void onLogout() {
-        PreferencesHelper.signout();
+        PreferencesHelper.getInstance().signout();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
